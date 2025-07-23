@@ -95,8 +95,17 @@ removed from the original string.
 Returns the original string if index is out of bounds.
 */
 UStr removeAt(UStr s, int32_t index) {
-	// TODO: implement this
+	int bytepos = bi_of_cpi(s.contents,index);
+        if (bytepos < 0 || bytepos >= s.bytes) {return s;}
 
+	int rmbytelen = utf8_codepoint_size(s.contents[bytepos]);
+	int len = strlen(s.contents);
+	char* result = malloc(len - rmbytelen + 1);
+
+	strncpy(result, s.contents, bytepos);
+	strcpy(result+bytepos,s.contents+bytepos+rmbytelen);
+	Ustr res = new_ustr(result);
+	return res;
 }
 
 /*

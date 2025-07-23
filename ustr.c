@@ -38,7 +38,29 @@ Returns an empty string on invalid range.
 */
 UStr substring(UStr s, int32_t start, int32_t end) {
 	// TODO: implement this
-
+	// bounds check on indices
+	int ulen = len(s);
+	if((start < 0) || (start >= ulen) || (start >= end) || (end > ulen)){
+		return new_ustr("");
+	}
+	else {
+		// work with codepoint indices as input,
+		// operate on byte indices
+		// above was in cpi, not bi
+		int bi_start = bi_of_cpi(s.contents,start);
+		int bi_end = bi_of_cpi(s.contents,end);
+		int diff = bi_end - bi_start;
+		char* newc = malloc(diff+1);
+		int i = bi_start;
+		while(i < bi_end){
+			// check length of codepoint and copy accordingly
+			newc[i-bi_start] = s.contents[i];
+			i += 1;
+		}
+		newc[bi_end] = 0;
+		UStr res = new_ustr(newc);
+		return res;
+	}
 }
 
 /*

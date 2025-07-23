@@ -69,23 +69,23 @@ concatenating s1 and s2.
 */
 UStr concat(UStr s1, UStr s2) {
 	// TODO: implement this
-	int concatenatedLength = s1.bytes + s2.bytes + 1;
-	char* concatenatedContent = malloc(concatenatedLength);
-	int index =0;
-	while(s1.contents!='\0'){
-		concatenatedContent[index]= s1.contents[index];
+	int rlen = s1.bytes + s2.bytes;
+	char* new = malloc(rlen + 1);
+	int index = 0;
+	while(s1.contents[index]!=0){
+		new[index]= s1.contents[index];
 		index++;
 	}
-	int index2=0;
-	while(s2.contents!='\0'){
-		concatenatedContent[index+ index2] =s2.contents[index2];
-		index2;
+	int index2 = 0;
+	while(s2.contents[index2]!= 0){
+		new[index + index2] = s2.contents[index2];
+		index2 += 1;
 	}
-	concatenatedContent[index +index2] ='\0';
-	Ustr concatenatedUstr = {concatenatedContent};
-	return concatenatedUstr;
-
-
+	// could run strncpy to copy from each to dest, must walk pointer in b/w
+	//strncpy(new,
+	new[index + index2] = 0;
+	UStr res = new_ustr(new);
+	return res;
 }
 
 /*
@@ -104,7 +104,7 @@ UStr removeAt(UStr s, int32_t index) {
 
 	strncpy(result, s.contents, bytepos);
 	strcpy(result+bytepos,s.contents+bytepos+rmbytelen);
-	Ustr res = new_ustr(result);
+	UStr res = new_ustr(result);
 	return res;
 }
 

@@ -116,6 +116,15 @@ Example: reverse("apples🍎 and bananas🍌") = "🍌sananab dna 🍎selppa")
 */
 UStr reverse(UStr s) {
 	// TODO: implement this
+	int lengthOfReversedString = s.bytes;
+	char* contentsReversed = malloc(lengthOfReversedString + 1);
+	int index =0;
+	while(s.contents[index]!='\0'){
+		contentsReversed[index] =s.contents[s.bytes- index];
+		index++;
+	}
+	UStr reversedStr = new_ustr(contentsReversed);
+	return reversedStr;
 
 }
 

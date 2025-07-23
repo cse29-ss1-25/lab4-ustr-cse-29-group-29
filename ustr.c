@@ -69,6 +69,22 @@ concatenating s1 and s2.
 */
 UStr concat(UStr s1, UStr s2) {
 	// TODO: implement this
+	int concatenatedLength = s1.bytes + s2.bytes + 1;
+	char* concatenatedContent = malloc(concatenatedLength);
+	int index =0;
+	while(s1.contents!='\0'){
+		concatenatedContent[index]= s1.contents[index];
+		index++;
+	}
+	int index2=0;
+	while(s2.contents!='\0'){
+		concatenatedContent[index+ index2] =s2.contents[index2];
+		index2;
+	}
+	concatenatedContent[index +index2] ='\0';
+	Ustr concatenatedUstr = {concatenatedContent};
+	return concatenatedUstr;
+
 
 }
 

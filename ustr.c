@@ -95,6 +95,7 @@ removed from the original string.
 Returns the original string if index is out of bounds.
 */
 UStr removeAt(UStr s, int32_t index) {
+        if (index < 0 || index >= s.codepoints) {return s;}
 	int bytepos = bi_of_cpi(s.contents,index);
         if (bytepos < 0 || bytepos >= s.bytes) {return s;}
 

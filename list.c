@@ -34,8 +34,28 @@ Given a list of strings and a separator string, returns a single string
 containing all the strings in list joined by the separator.
 */
 UStr join(List* list, UStr separator) {
-    // TODO: implement this
-
+	int total_len = 0;
+	for (int i = 0; i < list->size; i++) {
+		total_len+=list->data[i].bytes;
+		if (i < list->size-1) {
+			total_len+=separator.bytes;
+		}
+	}
+	char* result = malloc (total_len + 1);
+	int pos = 0;
+	for (int i=0; i < list->size; i++) {
+		for (int j = 0; j<list->data[i].bytes;j++) {
+			result[pos] = list->data[i].contents[j];
+			pos++;
+		}
+		if (i < list->size -1) {
+			for (int j = 0; j < separator.bytes; j++) {
+				result[pos++] = separator.contents[j];
+			}
+		}
+	}
+	result[pos] = '\0';
+	return new_ustr(result);
 }
 
 /*
